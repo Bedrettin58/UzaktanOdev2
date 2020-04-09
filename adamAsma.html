@@ -1,0 +1,496 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Adam Asma Oyunu</title>
+        <style>
+            #ana {
+                border: 1px solid black;
+                width: 470px;
+                height: 110px;
+                background-color: rgb(37, 110, 107);
+                float: left;
+                padding: 15px 15px 15px 15px;
+                margin: 10px;
+                border-radius: 25px;
+            }
+            #ana > div {              
+                border: 1px solid black;
+                width: 30px;
+                height: 30px;
+                background-color: cornflowerblue;
+                color:white;
+                float: left;
+                margin: 2px;
+                vertical-align:middle;
+                text-align:center;
+                border-radius: 5px;     
+            }
+            #kelime {              
+                border: 1px solid black;
+                width: 470px;
+                height: 150px;
+                background-color: rgb(37, 110, 107);
+                color:white;
+                float:left;
+                vertical-align: middle;
+                text-align: center;
+                padding: 15px 15px 15px 15px;
+                margin: 10px;
+                border-radius: 25px;   
+            }
+            #oyun {              
+                border: 1px solid black;
+                width: 490px;
+                height: 50px;
+                background-color: rgb(37, 110, 107);
+                color:white;
+                float:none;
+                vertical-align: middle;
+                text-align: center;
+                padding: 3px 3px 3px 3px;
+                margin: 10px;
+                border-radius: 20px;   
+            }
+            input {
+                background-color: cornflowerblue;
+                border: 1px solid black;
+                width: 100px;
+                height: 30px;
+                color:white;
+                float: left;
+                margin: 10px;
+                vertical-align:middle;
+                text-align:center;
+                border-radius: 5px;     
+            }
+        </style>
+    </head>
+    <body>
+        
+        <table style="float: left;">
+            <tr><td><div id="oyun"><h2>Adam Asma Oyunu</h2></div></td></tr>
+          
+            <tr>
+                <td>
+                    <div id="kelime">
+                        <h2>Bulunacak Şehir</h2>
+                        <h2 id="gizliSehir">_ _ _ _ _ _</h2>
+                        <h2 id="sonuc"></h2>
+                    </div>  
+                </td>
+            </tr>
+              <tr>
+                <td>
+                <div id="ana">
+                    <div>A</div> <div>B</div> <div>C</div> <div>Ç</div> <div>D</div> <div>E</div>
+                    <div>F</div> <div>G</div> <div>Ğ</div> <div>H</div> <div>I</div> <div>İ</div>
+                    <div>J</div> <div>K</div> <div>L</div> <div>M</div> <div>N</div> <div>O</div>
+                    <div>Ö</div> <div>P</div> <div>R</div> <div>S</div> <div>Ş</div> <div>T</div>
+                    <div>U</div> <div>Ü</div> <div>V</div> <div>Y</div> <div>Z</div>           
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="Tekrar Oyna" onclick="reset()"></td>    
+            </tr>
+        </table>      
+          
+       <canvas id="canvas" width="800" height="680" style="margin:10px; border:1px solid #c3c3c3;"></canvas>
+        
+       <!--  ***************** Javascript Kodları ****************************************-->      
+        <script>
+            //Şehirlerin tanımı
+            var sehirler = ["ADANA","ADIYAMAN","AFYON","AĞRI","AMASYA","ANKARA", "ANTALYA",
+                             "ARTVİN", "AYDIN", "BALIKESİR",  "BİLECİK","BİNGÖL","BİTLİS","BOLU",
+                             "BURDUR","BURSA","ÇANAKKALE","ÇANKIRI","ÇORUM","DENİZLİ","DİYARBAKIR",
+                             "EDİRNE","ELAZIĞ","ERZİNCAN","ERZURUM","ESKİŞEHİR","GAZİANTEP","GİRESUN",
+                             "GÜMÜŞHANE","HAKKARİ","HATAY","ISPARTA","MERSİN","İSTANBUL","İZMİR",
+                             "KARS","KASTAMONU","KAYSERİ","KIRKLARELİ","KIRŞEHİR","KOCAELİ","KONYA",
+                             "KÜTAHYA","MALATYA","MANİSA","KAHRAMAN MARAŞ","MARDİN","MUĞLA","MUŞ",
+                             "NEVŞEHİR","NİĞDE","ORDU","RİZE","SAKARYA","SAMSUN","SİİRT","SİNOP",
+                             "SİVAS","TEKİRDAĞ","TOKAT","TRABZON","TUNCELİ","ŞANLIURFA","UŞAK",
+                             "VAN","YOZGAT","ZONGULDAK","AKSARAY","BAYBURT","KARAMAN","KIRIKKALE",
+                             "BATMAN","ŞIRNAK","BARTIN","ARDAHAN","IĞDIR","YALOVA","KARABÜK",
+                             "KİLİS","OSMANİYE","DÜZCE"                 
+                            ];
+            // Random şehir seçimi
+            var sehir;
+            function sehirSec(){
+                var ind = Math.floor(Math.random() * 82); 
+                sehir = sehirler[ind];
+                var tmp ="";
+                for (let i = 0; i < sehir.length; i++) {
+                    tmp +="_ ";     
+                }
+                document.getElementById("gizliSehir").innerHTML = tmp;
+                //document.getElementById("cevap").innerHTML = sehir;
+            }
+
+            //çizim tuvali tanımı  
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            var anadiv = document.querySelector('#ana');
+            var elements = anadiv.getElementsByTagName('div'); 
+            for (let i = 0; i < elements.length; i++) {
+                    elements[i].addEventListener("mouseout", mouseOut);
+                    elements[i].addEventListener("mouseover", mouseOver);  
+                    elements[i].addEventListener("click", secilenHarfKontrol);
+                }
+
+            function mouseOver() {
+                this.style.backgroundColor = "#CCE6FF";
+                this.style.color = "red";
+            }
+
+            function mouseOut() {
+                this.style.backgroundColor = "cornflowerblue";
+                this.style.color = "white";
+            }
+           
+            //Adamın ekranda kaydırılması parametreleri
+            var dx = 230, dy = 50;
+            //Başlangıç Koordinatı, açı (saat yönü), uzunluk, çizgi kalınlığı
+            //ve renk ile Sol bacağın çizimi
+            function drawSolBacak(x1, y1, aci, uz, kalinlik, renk){
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -aci * Math.PI / 180;
+                var x2 = x1 + uz*Math.cos(rad);
+                var y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);
+                ctx.moveTo(x2 - 15,y2 + 15);
+                ctx.lineTo(x2 - 40, y2 + 20);
+                ctx.stroke();
+            }
+            
+            //Başlangıç Koordinatı, açı (saat yönü), uzunluk, çizgi kalınlığı
+            //ve renk ile Sağ bacağın çizimi
+            function drawSagBacak(x1, y1, aci, uz, kalinlik, renk){
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -aci * Math.PI / 180;
+                var x2 = x1 + uz*Math.cos(rad);
+                var y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);
+                ctx.moveTo(x2 + 15,y2 + 15);
+                ctx.lineTo(x2 + 40, y2 + 20);
+                ctx.stroke();
+            }
+            
+            //Gövdenin çizimi
+            function drawGovde(x1, y1, aci, uz, kalinlik, renk){
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -aci * Math.PI / 180;
+                var x2 = x1 + uz*Math.cos(rad);
+                var y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);               
+                ctx.stroke();
+            }
+            
+            //Başlangıç Koordinatı, açı (saat yönü), uzunluk, çizgi kalınlığı
+            //ve renk ile Sol kol ve elin çizimi
+            function drawSolKol(x1, y1, aci, uz, kalinlik, renk){
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -aci * Math.PI / 180;
+                x2 = x1 + uz*Math.cos(rad);
+                y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);
+                //Sol el çizimi
+                ctx.moveTo(x2 - 12, y2 + 15);
+                ctx.lineTo(x2 - 20, y2 + 20);
+                ctx.stroke();
+            }   
+      
+            //Başlangıç Koordinatı, açı (saat yönü), uzunluk, çizgi kalınlığı
+            //ve renk ile Sağ kol ve elin çizimi
+            function drawSagKol(x1, y1, aci, uz, kalinlik, renk){
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -aci * Math.PI / 180;
+                var x2 = x1 + uz*Math.cos(rad);
+                var y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);
+                //Sag El çiz
+                sagEL(x2, y2);  
+                ctx.stroke();
+            }  
+            
+            // Sag El çizimi
+            function sagEL(x2, y2){
+                ctx.moveTo(x2 + 12,y2 + 15);
+                ctx.lineTo(x2 + 20, y2 + 20);
+            }        
+            
+            //Kafa çizimi
+            function drawKafa(x1, y1, aci, uz, kalinlik, renk){
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -aci * Math.PI / 180;
+                var x2 = x1 + uz*Math.cos(rad);
+                var y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);               
+                ctx.stroke();
+            }    
+            
+            //Darağacı çizimi
+             function drawDaragaci(x1, y1, kalinlik, renk){
+                //Platform çizimi
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                x2 = x1 + 425, y2 = y1;
+                ctx.lineTo(x2, y2);
+                x3 = x2 - 100, y3 = y2 - 100;   
+                ctx.lineTo(x3, y3);
+                x4 = x3 - 220, y4 = y3;   
+                ctx.lineTo(x4, y4);  
+                ctx.lineTo(x1, y1);  
+                ctx.rect(x1, y1, 425,50);
+                ctx.moveTo(x4,y4);
+                ctx.stroke();
+
+                //Arka destek çizimi
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.fillStyle = renk;
+                ctx.moveTo(x4,y4);
+                x5 = x4 + 105, y5 = y4 - 400;
+                ctx.lineTo(x5, y5); 
+                ctx.lineTo(x3, y3); 
+                ctx.moveTo(x5 - 30, y5 - 10);
+                ctx.fillRect(x5 - 30, y5 - 10, 60, 30); 
+                ctx.stroke();
+
+                //Urgan çizimi
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = "#ff0000";
+                ctx.moveTo(x5, y5 + 20);
+                x6 = x5, y6 = y5 + 80;
+                ctx.lineTo(x6, y6); 
+                ctx.arc(x6, y6 + 40, 20, 3/2*Math.PI, 7/2*Math.PI); 
+                
+                ctx.stroke();
+
+            }  
+            
+            //asılmış adam çizimi  
+            function drawAsilmisAdam(x1, y1, kalinlik, renk){
+                //kafa çizimi
+                ctx.beginPath();
+                ctx.lineCap = "round";
+                ctx.lineWidth = 2*kalinlik;
+                ctx.strokeStyle = renk;
+                ctx.moveTo(x1,y1);
+                var rad = -90 * Math.PI / 180, uz = 10;
+                x2 = x1 + uz*Math.cos(rad) + 4;
+                y2 = y1 + uz*Math.sin(rad);
+                ctx.lineTo(x2, y2);
+                //Gövde çizimi
+                ctx.moveTo(x1, y1 + 40);
+                ctx.lineTo(x1, y1 + 140);
+                ctx.stroke();
+
+                //Sol kol çizimi
+                ctx.beginPath();
+                ctx.lineWidth = kalinlik;
+                uz = 80, aci = -100;
+                var rad = -aci * Math.PI / 180;
+                x2 = x1 - 25, y2 = y1 + 40;
+                ctx.moveTo(x2, y2);
+                x3 = x2 + uz*Math.cos(rad);
+                y3 = y2 + uz*Math.sin(rad);
+                ctx.lineTo(x3, y3);
+
+                //sol El çizimi
+                x4 = x3 - 5, y4 = y3 + 18;
+                ctx.moveTo(x4, y4);
+                ctx.lineTo(x4 - 2, y4 + 5);
+                ctx.stroke();
+
+                // Sağ Kol çizimi
+                uz = 80, aci = -80;
+                var rad = -aci * Math.PI / 180;
+                x2 = x1 + 25, y2 = y1 + 40;
+                ctx.moveTo(x2, y2);
+                x3 = x2 + uz*Math.cos(rad);
+                y3 = y2 + uz*Math.sin(rad);
+                ctx.lineTo(x3, y3);
+                //ctx.stroke();
+                // Sağ el çizimi
+                x4 = x3 + 5, y4 = y3 + 18;
+                ctx.moveTo(x4, y4);
+                ctx.lineTo(x4 + 2, y4 + 5);
+                ctx.stroke();
+
+                //Sol bacak çizimi
+                uz = 90, aci = -95;
+                var rad = -aci * Math.PI / 180;
+                x2 = x1 - 15, y2 = y1 + 165;
+                ctx.moveTo(x2, y2);
+                x3 = x2 + uz*Math.cos(rad);
+                y3 = y2 + uz*Math.sin(rad);
+                ctx.lineTo(x3, y3);
+                //Sol ayak 
+                x4 = x3 - 5, y4 = y3 + 18;
+                ctx.moveTo(x4, y4);
+                x5 = x4 - 15;
+                y5 = y4 + 15;
+                ctx.lineTo(x5, y5);
+
+                //Sag bacak çizimi
+                uz = 90, aci = -85;
+                var rad = -aci * Math.PI / 180;
+                x2 = x1 + 15, y2 = y1 + 165;
+                ctx.moveTo(x2, y2);
+                x3 = x2 + uz*Math.cos(rad);
+                y3 = y2 + uz*Math.sin(rad);
+                ctx.lineTo(x3, y3);
+                //Sag ayak 
+                x4 = x3 + 5, y4 = y3 + 18;
+                ctx.moveTo(x4, y4);
+                x5 = x4 + 15;
+                y5 = y4 + 15;
+                ctx.lineTo(x5, y5);
+
+                ctx.stroke();
+
+            }
+             
+            //Darağacı çiz
+            drawDaragaci(-50+dx, 500+dy, 2, "#843647"); 
+
+            //random bir şehir seçiliyor
+            sehirSec();
+
+            //Girilen tahmin harf kontrol ediliyor
+            var hak = 0;
+            function secilenHarfKontrol(){
+                //ekran klavyesinden seçilen harf 
+                var ara = this.innerHTML;
+
+                //aynı harften birden fazla varsa hepsini indisini
+                //bir diziye al
+                var indisler = new Array();
+                for (let i = 0; i < sehir.length; i++) {
+                    if(ara == sehir[i]){
+                        indisler.push(i);
+                    } 
+                }
+
+                if(indisler.length == 0){    //girilen harf yoksa
+                    hak++;
+                    switch (hak) {
+                        case 1:
+                            //Bakana göre Sol bacak ve ayak
+                            drawSolBacak(150 + dx, 350 + dy, -110, 90, 20, "#647198");
+                            break;
+                        case 2:
+                            //Bakana göre Sağ bacak ve ayak
+                            drawSagBacak(180 + dx, 350 + dy, -70, 90, 20, "#647198");
+                            break;
+                        case 3:
+                            //Gövde çiz
+                            drawGovde(165 + dx, 325 + dy, 90, 100, 40, "#647198");
+                            break;
+                        case 4:
+                            //Sol kol çiz
+                            drawSolKol(140 + dx, 225 + dy, -110, 80, 20, "#647198");
+                            break;
+                        case 5:
+                            //Sağ kol çiz
+                            drawSagKol(190 + dx, 225 + dy, -70, 80, 20, "#647198");
+                            
+                            break;
+                        case 6:
+                            //Kafa çiz
+                            drawKafa(165 + dx, 188 + dy, 90, 10, 40, "#647198");
+                            break;
+                        case 7:
+                            //ekranı temizle
+                            ctx.clearRect(0, 0, 800, 680);
+                            //Darağacı çiz
+                            drawDaragaci(-50+dx, 500+dy, 2, "#843647"); 
+                            //Asılmış adam çiz
+                            drawAsilmisAdam(161 + dx, 117 + dy, 20, "#640098");
+                            document.getElementById('sonuc').innerHTML = "Üzgünüm asıldınız!";
+                            var sonuc = document.getElementById('sonuc');
+                            sonuc.style.color = "#AB2567";
+                        /*
+                            audio = new Audio();
+                            audio.src = "d:/Müzik/Vangelis - 1492.mp3";
+                            audio.volume = 0.2;
+                            audio.loop = true;
+                            audio.play();
+                        */
+
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                    
+                }else{    
+                   
+                    // girilen harf varsa
+                    var tmp = document.getElementById("gizliSehir").innerHTML;
+                    var t1, t2, ind;
+                    // olan bütün harfi yerleştir
+                    for (let i = 0; i < indisler.length; i++) {
+                        ind = indisler[i];
+                        t1 = tmp.substr(0, 2*ind);
+                        t2 = tmp.substr(2*ind + 1);
+                        tmp = t1 + ara + t2;
+                        //alert(tmp);
+                    }
+                    //olan harfleri yerleştirdikten sonra tekran ekrana yaz
+                    document.getElementById("gizliSehir").innerHTML = tmp;
+
+                    //ekran gösterimindeki şehrin boşluklarını atarak
+                    //tutulan şhirle karşılaştır
+                    tmp1 = "";
+                    for (let i = 0; i < tmp.length; i += 2) {
+                        tmp1 += tmp.substr(i, 1);
+                    }
+                    if(tmp1 === sehir){
+                        //alert("Tebrikler buldunuz!");
+                        var seh = document.getElementById('gizliSehir').innerHTML;
+                        document.getElementById('sonuc').innerHTML = "Tebrikler buldunuz!";
+                        var sonuc = document.getElementById('sonuc');
+                        sonuc.style.color = "yellow";
+                        //var oyundiv = document.querySelector('#oyun').firstChild;
+                        //oyundiv.style.color = "red";
+                        
+                    }      
+                }
+            }
+            function reset(){
+                location.reload(true);
+            }
+        </script>
+    </body>
+</html>

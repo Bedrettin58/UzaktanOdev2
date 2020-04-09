@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Javascript Events - Accordion</title>
+  </head>
+  <style>
+        #section1, #section2, #section3 {
+            display: none;
+        }
+        h2 {
+            cursor: pointer;
+        }
+    </style>
+  <body>
+      <div id="accordion">
+            <h2><a href="adamAsma.html">Adam Asma Oyunu</a> </h2>
+            <h2>Section 1</h2>
+            <div id="section1">
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, 
+                    porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
+                </p>
+            </div>
+            <h2 style="color:crimson">Bu Section 5 sn Sonra Silinecek </h2> 
+            <div id="section2">
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. 
+                Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, 
+                porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
+                </p>
+            </div>
+            <h2>Section 3</h2>
+            <div id="section3">
+                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, 
+                    porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
+                </p>
+            </div>
+        </div>
+        
+        <!--Javascript Kodları -->
+        <script>
+            //HTML elemanlarını seçme, yeni ekleme, özelliklerini değiştirme
+            //ve eklenen elemanlara olay bağlama
+
+            //<h2>Section 4</h2> oluşturma accordion div'i içinde
+            var para = document.createElement("h2");
+            var node = document.createTextNode("Bu Section Sonradan Oluşturuldu");
+            para.appendChild(node);
+            var element = document.getElementById("accordion");
+            element.appendChild(para);
+
+            //<div id="section4"></div> tag'i oluşturma
+            var div = document.createElement("div");
+            div.setAttribute("id","section4");
+            element.appendChild(div);
+
+            //p oluştur içine metin ekle bu p'yi de yukarıda oluşturulan div'e ekle
+            var p = document.createElement("p");
+            var metin ="4 - Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.";
+            metin += " Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus,";
+            metin += " porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.";
+            var txt = document.createTextNode(metin);
+            p.appendChild(txt);
+            div.appendChild(p);
+
+            //div'e display özelliği ekle
+            var ele = document.getElementById("section4");
+            ele.setAttribute("style", "display: none;");
+
+            var accordion = document.querySelector('#accordion');
+            var titles = accordion.getElementsByTagName('h2');
+
+            //h2 tag'larına click olayı ekler
+            for (let i = 0; i < titles.length; i++) {
+                titles[i].addEventListener('click', displayAccordion);  
+            }
+
+            //h2 tag'larından sonra gelen dizleri görünür/görünmez yapar
+            function displayAccordion(){
+                content = this.nextElementSibling;
+                if(content.style.display !='block'){
+                    content.style.display ='block';
+                }else{
+                    content.style.display ='none';
+                }
+            }
+
+            function sectionSil(){
+                var element = document.getElementById("section2");
+                element.previousElementSibling.remove();
+                element.remove();
+            }
+
+            window.onload = function (){
+                setTimeout(function(){ sectionSil(); }, 5000);
+            }
+
+        </script>
+  </body>
+</html>
