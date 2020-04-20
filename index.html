@@ -1,102 +1,234 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Javascript Events - Accordion</title>
-  </head>
-  <style>
-        #section1, #section2, #section3 {
-            display: none;
-        }
-        h2 {
-            cursor: pointer;
-        }
-    </style>
-  <body>
-      <div id="accordion">
-            <h2><a href="adamAsma.html">Adam Asma Oyunu</a> </h2>
-            <h2>Section 1</h2>
-            <div id="section1">
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. 
-                    Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, 
-                    porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
-                </p>
-            </div>
-            <h2 style="color:crimson">Bu Section 5 sn Sonra Silinecek </h2> 
-            <div id="section2">
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. 
-                Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, 
-                porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
-                </p>
-            </div>
-            <h2>Section 3</h2>
-            <div id="section3">
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. 
-                    Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, 
-                    porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
-                </p>
-            </div>
-        </div>
-        
-        <!--Javascript Kodları -->
-        <script>
-            //HTML elemanlarını seçme, yeni ekleme, özelliklerini değiştirme
-            //ve eklenen elemanlara olay bağlama
 
-            //<h2>Section 4</h2> oluşturma accordion div'i içinde
-            var para = document.createElement("h2");
-            var node = document.createTextNode("Bu Section Sonradan Oluşturuldu");
-            para.appendChild(node);
-            var element = document.getElementById("accordion");
-            element.appendChild(para);
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>JavaScript</title>
+  <link rel="stylesheet" type="text/css" href="css/uz2.css">
+</head>
 
-            //<div id="section4"></div> tag'i oluşturma
-            var div = document.createElement("div");
-            div.setAttribute("id","section4");
-            element.appendChild(div);
+<body>
+  <div class="menu">
+    <!--a href="" id="kapat" onclick="menuKapat()">&times</a-->
+    <button class="btnMenu" onclick="konuAc(event, 'f1')" id="varsayilanAc">JavaScript Giriş</button>
+    <button class="btnMenu" onclick="konuAc(event, 'f2')">JavaScript Yazılım (Syntax) yapısı</button>
+    <button class="btnMenu" onclick="konuAc(event, 'f3')">Değişkenler</button>
+    <button class="btnMenu" onclick="konuAc(event, 'f4')">Operatörler</button>
+    <button class="btnMenu" onclick="konuAc(event, 'f5')">JavaScript DOM</button>
+    <button class="btnMenu" onclick="konuAc(event, 'f6')">Adam Asma Oyunu</a></button>
+    
+  </div>
 
-            //p oluştur içine metin ekle bu p'yi de yukarıda oluşturulan div'e ekle
-            var p = document.createElement("p");
-            var metin ="4 - Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.";
-            metin += " Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus,";
-            metin += " porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.";
-            var txt = document.createTextNode(metin);
-            p.appendChild(txt);
-            div.appendChild(p);
+  <div id="f1" class="menuicerik">
+    <h2>JavaScript Giriş</h2>
+    <p>
+      JavaScript, HTML ve Web'in programlama dilidir.  <br>
+      JavaScript öğrenmesi kolaydır. <br>
+      Bu öğretici size temelden ileri düzeye JavaScript öğretecektir. <br>
+      JavaScript, tüm web geliştiricilerinin öğrenmesi gereken 3 dilden biridir: <br>
+      <ol start="1">
+        <li>HTML web sayfalarının içeriğini tanımlamak için</li>
+        <li>Web sayfalarının yerleşimini belirlemek için CSS</li>
+        <li>Web sayfalarının davranışını programlamak için JavaScript</li>
+      </ol>
+    </p>
+     <p>
+      Web sayfaları JavaScript'in kullanıldığı tek yer değildir.
+      Birçok masaüstü ve sunucu programı JavaScript kullanır.  <br>
+      Node.js en iyi bilinenidir. MongoDB ve CouchDB gibi bazı veritabanları da programlama 
+      dili olarak JavaScript kullanır.
+    </p>
+  </div>
 
-            //div'e display özelliği ekle
-            var ele = document.getElementById("section4");
-            ele.setAttribute("style", "display: none;");
+  <div id="f2" class="menuicerik">
+    <h2>JavaScript Yazılım (Syntax) yapısı</h2>
+    <p>JavaScript’in yazılım kurallarının (Syntax) çoğu JAVA programlamaya benzer ancak JavaScript aynı zamanda
+      Perl ve Python’dan da etkilenir. JavaScript karakter kümesi olarak Unicode
+      Unicode (Evrensel Kod) Unicode Consortium organizasyonu tarafından geliştirilen ve
+      her karaktere bir sayı değeri karşılığı atayan bir endüstri standardıdır.
+      karakter kümesi kullanılır. Fakat, bu her Unicode kodlamasının görüntüleneceği anlamına gelmez.
+      Karakterin “Glyph” (Kılıf) ad verilen görüntüsünün de belge çözümleyicinin içinde tanımlanmış olması
+      gerekmektedir. Doğal olarak bu olasılık az kullanılan arkaik diller için geçerlidir.
+      Batı dillerine ait tüm karakterler sorunsuzca görüntülenecektir. Diğer dillerinde karakter kodları ,
+      çözümleyicilere eklenmeye devam etmektedir.
+    </p>
+    <p>
+      JavaScript programlama dilinde Unicode karakterlerinin desteklenmesi,
+      JavaScript programlarında, değişken isimler, fonksiyon isimleri gibi kullanıcı tanımlı her
+      değişken ve nesnenin Türkçe isimlerle tanıtılıp çağırılabileceği anlamına gelir.
+      Bu yerel olarak programın anlaşılabilirliliğini arttırır, fakat uluslararası ortamlarda,
+      yerel diller ile yazılmış programların anlaşılabilililiği oldukça azalır.
+    </p>
+    <p>
+      JavaScript dilinde alfanumeric değişkenler ve düzenli ifadeler (RegExp) gereği olmadıkça,
+      her türlü boşluk, satır aralığı ve tab karakterlerini göz ardı eder. bu nedenle,
+      kendimiz için en anlamlı kod düzenlemelerini yaparak, program yazım konforuna sahip oluruz.
+      JavaScript programlama dili, Algol/Pascal/ADA serbest yazım formunu aynen destekler.
+      Yazım yöntemi çok esnek olmasına karşın, alışkanlıktan kaynaklanan belirli kalıplar içinde
+      kalmanın oldukça yararı vardır. Çünkü yazılmış olan kodun veya kod bloğunun ileride bakımı için bize
+      büyük kolaylıklar sağlayacaktır.
+    </p>
+    <p>
+      JavaScript programlama dilinde, bazı program dillerinde olduğu gibi, blok içinde alınmış kodlar, 
+      yeni bir kapsam alanı yaratmazlar. JavaScript yorumlayıcısı, bildirim bekleyen if gibi program 
+      öğelerine tek bildirim yerine birden çok bildirim belirtilmesi için çalıştırılacak bildirimlerin 
+      bir bildirim bloğu { } içine alınmasını öngörmüştür. Bildirim bloğunda kullanılacak program adımları 
+      bellidir ve bunlarda kullanılacak bildirim bloğu {  }’nun amacı, içeriğine yeni bir kapsam açmak değil, 
+      içeriği olan bildirimlerin sıra ile çalıştırılmasını sağlamaktır.
+    </p>
+    <p>
+      JavaScript’te bütün değikenler harf, alt çizgi veya ( _ veya altbağlaç ) veya dolar ( $ ) işareti ile 
+      başlar. Rakamlar ve diğer karakterler bu üç karakterden sonra kullanılır. Değişkenler $ işareti ile 
+      başlatılabilmesine karşın güncel kullanımda bu olanak sadece makine tarafından oluşturulan otomatik 
+      JavaScript kodlarına bırakılmaktadır. Yani insanlar tarafından oluşturulan kodlarda, önleyici hiç 
+      bir kural olmamasına karşın, değişken isimlerinde $ karakteri pek kullanılmamaktadır.
+    </p>
+    <p>
+      JavaScript büyük küçük harf duyarlıdır (Case Sensitive). Yani aynı isimde hem büyük harfle hemde küçük 
+      harfle değişken oluşturursanız JavaScript bu iki değişkeni ayrı ayrı yorumlar. Örnek icerik, Icerik 
+      veya ICERIK değişkenler birbirinden farklıdır ve farklı şekilde yorumlanacaktır. JavaScript’te aşağıda 
+      belirtilen rezerv edilmiş anahtar kelimelerden oluşan değişken oluşturamazsınız. Son olarak tek tırnak 
+      ile çift tırnak arasında herhangi bir fark yoktur. Dikkat edilmesi gereken eğer tek tırnak ile 
+      başlarsanız tek tırnak, çift tırnak ile başlarsanız çift tırnak içeriğinizi bitirmenizdir.
+    </p>
+  </div>
 
-            var accordion = document.querySelector('#accordion');
-            var titles = accordion.getElementsByTagName('h2');
+  <div id="f3" class="menuicerik">
+    <h2>Değişkenler</h2>
+    <p>JavaScript değişkenleri, veri değerlerini saklamak için kullanılan içerik tutuculardır.</p>
+    <p>Bu örnekte, x, y ve z birer değişkendir:</p>
+    <p><h2>Örnek</h2></p>
+    <p>var x = 5;<br> var y = 6;<br> var z = x + y;</p>
+    <p>Yukarıdaki örnekte :
+      <ul>
+        <li>x, 5 değerini,</li>
+        <li>y, 6 değerini,</li>
+        <li>z, 11 değerini tutar.</li>
+      </ul> 
+    </p>
+    <p>
+      <ul>
+        <li>var price1 = 5;</li>
+          <li> var price2 = 6;</li>
+          <li>var total = price1 + price2;</li>
+      </ul>
+    </p>
+    <h2>JavaScript Veri Tipleri</h2>
+    <p>JavaScript değişkenleri 100 gibi sayıları ve "Bedrettin Başkaya" gibi metin değerlerini içerebilir.</p>
+    <p>Programlamada metin değerlerine metin dizeleri denir.</p>
+    <p>JavaScript birçok veri türünü işleyebilir, ancak şimdilik sadece sayıları ve dizeleri düşünün. </p>
+    <p>Dizeler çift veya tek tırnak içine alınır. Sayılar tırnak işaretleri olmadan yazılır.</p>
+    <p>Tırnak içine bir sayı koyarsanız, metin dizesi olarak değerlendirilir.</p>
+   <p>
+    <ul>
+      <li>var pi = 3.141592654;</li>
+      <li>var kisi = "Bedrettin Başkaya";</li>
+      <li>var cevap = 'Evet, benim!';</li>
+    </ul> 
+   </p>
+   <p>JavaScript tanımlayıcılarının (adları) aşağıdakilerle başlaması gerektiğini unutmayın:</p>
+   <p>
+    <ul>
+      <li>Bir harf (A-Z or a-z)</li>
+      <li>Bir dollar işareti ($)</li>
+      <li>Veya bir alt çizgi (_)</li>
+      </ul>
+   </p>
+  </div>
+  <div id="f4" class="menuicerik">
+    <div style="float: left;">
+      <h2>Aritmetik Operatörler</h2>
+      <table class="table1" >
+        <tr>
+          <th style="width:25%">Operatör</th>
+          <th>Tanım</th>
+        </tr>
+        <tr>
+          <td>+</td>
+          <td>Toplama</td>
+        </tr>
+        <tr>
+          <td>-</td>
+          <td>Çıkarma</td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td>Çarpma</td>
+        </tr>
+        <tr>
+          <td>**</td>
+          <td>Üs Alma (<a href="js_es6.asp">ES2016</a>)</td>
+        </tr>
+        <tr>
+          <td>/</td>
+          <td>Bölme</td>
+        </tr>
+        <tr>
+          <td>%</td>
+          <td>Mod Alma (Bölümden Kalan)</td>
+        </tr>
+        <tr>
+          <td>++</td>
+          <td>Artırma</td>
+        </tr>
+        <tr>
+          <td>--</td>
+          <td>Eksiltme</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <h2>Atama Operatörleri</h2>
+      <table class="table1">
+        <tr>
+          <th style="width:25%;">Operatör</th>
+          <th>Örnek</th>
+          <th>Eşdeğer</th>
+        </tr>
+        <tr>
+          <td>=</td>
+          <td>x = y</td>
+          <td>x = y</td>
+        </tr>
+        <tr>
+          <td>+=</td>
+          <td>x += y</td>
+          <td>x = x + y</td>
+        </tr>
+        <tr>
+          <td>-=</td>
+          <td>x -= y</td>
+          <td>x = x - y</td>
+        </tr>
+        <tr>
+          <td>*=</td>
+          <td>x *= y</td>
+          <td>x = x * y</td>
+        </tr>
+        <tr>
+          <td>/=</td>
+          <td>x /= y</td>
+          <td>x = x / y</td>
+        </tr>
+        <tr>
+          <td>%=</td>
+          <td>x %= y</td>
+          <td>x = x % y</td>
+        </tr>
+        <tr>
+          <td>**=</td>
+          <td>x **= y</td>
+          <td>x = x ** y</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="f5" class="menuicerik"><iframe src="dom.html" style="height:800px; width:100%;" frameborder="0" allowFullScreen></iframe></div>
+  <div id="f6" class="menuicerik" ><iframe src="adamAsma.html" style="height:800px; width:100%;" frameborder="0" allowFullScreen></iframe></div>
+  
+  <!--Javascript Kodları -->
+  <script src="script/uz2.js"></script>
+</body>
 
-            //h2 tag'larına click olayı ekler
-            for (let i = 0; i < titles.length; i++) {
-                titles[i].addEventListener('click', displayAccordion);  
-            }
-
-            //h2 tag'larından sonra gelen dizleri görünür/görünmez yapar
-            function displayAccordion(){
-                content = this.nextElementSibling;
-                if(content.style.display !='block'){
-                    content.style.display ='block';
-                }else{
-                    content.style.display ='none';
-                }
-            }
-
-            function sectionSil(){
-                var element = document.getElementById("section2");
-                element.previousElementSibling.remove();
-                element.remove();
-            }
-
-            window.onload = function (){
-                setTimeout(function(){ sectionSil(); }, 5000);
-            }
-
-        </script>
-  </body>
 </html>
